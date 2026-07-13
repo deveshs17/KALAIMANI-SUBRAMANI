@@ -1,0 +1,1049 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Academic Activities | KALAIMANI SUBRAMANI</title>
+    <link rel="stylesheet" href="src/styles.css" />
+    <style>
+      .academic-page {
+        --activity-primary: var(--accent-dark);
+        --activity-accent: var(--accent);
+        --activity-border: var(--line);
+        --activity-soft: #f8fafc;
+      }
+
+      .academic-page .page-hero {
+        background: linear-gradient(
+          rgba(0, 0, 0, 0.45),
+          rgba(0, 0, 0, 0.45)
+        ), url("assets/zoologyhome.jpeg");
+        background-size: cover;
+        background-position: center;
+      }
+
+      .activity-stats {
+        display: grid;
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        gap: 14px;
+        margin: 0 0 22px;
+      }
+
+      .activity-filters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin: 0 0 22px;
+      }
+
+      .filter-button {
+        min-height: 42px;
+        padding: 0 16px;
+        border: 1px solid var(--activity-border);
+        border-radius: 8px;
+        color: var(--ink);
+        background: #ffffff;
+        font-weight: 900;
+        cursor: pointer;
+      }
+
+      .filter-button.active,
+      .filter-button:hover {
+        color: #ffffff;
+        border-color: var(--activity-primary);
+        background: var(--activity-primary);
+      }
+
+      .stat-card,
+      .activity-section,
+      .timeline-panel {
+        border: 1px solid var(--activity-border);
+        border-radius: 8px;
+        background: #ffffff;
+        box-shadow: 0 12px 28px rgba(23, 32, 51, 0.08);
+      }
+
+      .stat-card {
+        min-height: 112px;
+        padding: 18px;
+      }
+
+      .stat-card strong {
+        display: block;
+        color: var(--activity-primary);
+        font-size: 2rem;
+        line-height: 1;
+      }
+
+      .stat-card span {
+        display: block;
+        margin-top: 10px;
+        color: var(--muted);
+        font-weight: 800;
+      }
+
+      .timeline-panel {
+        margin-bottom: 22px;
+        padding: 22px;
+      }
+
+      .timeline-panel h2 {
+        color: var(--activity-primary);
+      }
+
+      .activity-timeline {
+        display: grid;
+        grid-template-columns: repeat(10, minmax(70px, 1fr));
+        gap: 10px;
+        margin: 18px 0 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .activity-timeline li {
+        min-height: 72px;
+        padding: 12px;
+        border: 1px solid var(--activity-border);
+        border-radius: 8px;
+        background: var(--activity-soft);
+      }
+
+      .activity-timeline span,
+      .activity-card span {
+        display: block;
+        color: var(--muted);
+        font-size: 0.75rem;
+        font-weight: 800;
+        text-transform: uppercase;
+      }
+
+      .activity-timeline strong {
+        display: block;
+        margin-top: 8px;
+        color: var(--activity-primary);
+        font-size: 1.45rem;
+      }
+
+      .activity-section {
+        margin-bottom: 18px;
+        overflow: hidden;
+      }
+
+      .activity-section.is-hidden,
+      .activity-stats.is-hidden,
+      .timeline-panel.is-hidden {
+        display: none;
+      }
+
+      .activity-section summary {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 18px 20px;
+        color: #ffffff;
+        background: var(--activity-primary);
+        cursor: pointer;
+      }
+
+      .activity-section summary span {
+        font-size: 1.05rem;
+        font-weight: 900;
+      }
+
+      .activity-section summary small {
+        color: #d6eeee;
+        font-weight: 800;
+      }
+
+      .section-intro {
+        margin: 0;
+        padding: 18px 20px 0;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      .activity-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+        gap: 16px;
+        padding: 20px;
+      }
+
+      .activity-card {
+        min-height: 210px;
+        padding: 18px;
+        border: 1px solid var(--activity-border);
+        border-radius: 8px;
+        background: #ffffff;
+        box-shadow: 0 10px 22px rgba(23, 32, 51, 0.08);
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+      }
+
+      .activity-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 18px 34px rgba(23, 32, 51, 0.14);
+      }
+
+      .activity-badge {
+        display: inline-flex;
+        margin-bottom: 12px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        color: var(--activity-primary);
+        background: #eef7f7;
+        font-size: 0.72rem;
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+
+      .activity-card h3 {
+        margin-bottom: 14px;
+        color: var(--ink);
+        font-size: 1rem;
+        line-height: 1.45;
+      }
+
+      .activity-meta {
+        display: grid;
+        gap: 10px;
+      }
+
+      .activity-meta p {
+        margin: 0;
+        color: var(--ink);
+        line-height: 1.5;
+      }
+
+      .back-to-top {
+        position: fixed;
+        right: 18px;
+        bottom: 18px;
+        z-index: 5;
+        width: 44px;
+        height: 44px;
+        border-radius: 999px;
+        color: #ffffff;
+        background: var(--activity-primary);
+        box-shadow: 0 10px 24px rgba(23, 32, 51, 0.24);
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(8px);
+        transition: opacity 0.2s ease, transform 0.2s ease;
+      }
+
+      .back-to-top.is-visible {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+      }
+
+      @media (max-width: 1100px) {
+        .activity-stats {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .activity-timeline {
+          grid-template-columns: repeat(5, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 640px) {
+        .activity-stats,
+        .activity-timeline {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .activity-section summary {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body class="academic-page" id="top">
+    <main class="site-shell">
+      <header class="site-header" aria-label="Primary">
+        <a class="brand" href="index.html"></a>
+        <nav class="nav-buttons" aria-label="Main pages">
+          <a href="index.html">Home</a>
+          <a href="Achievement.html">Achievement</a>
+          <a href="Journals.html">Journals</a>
+          <a class="active" href="Academic activity.html">Academic Activity</a>
+          <a href="Gallery.html">Gallery</a>
+        </nav>
+      </header>
+
+      <section class="page-hero">
+        <p class="eyebrow">Academic Activities</p>
+        <h1>Professional Teaching, Research, FDP and Workshops</h1>
+        <p class="subtitle">A structured record of guided internships, faculty development programs, orientation courses, invited resource-person roles, paper presentations, seminars, conferences and workshops.</p>
+      </section>
+
+      <section class="activity-filters" aria-label="Academic activity filters">
+        <button class="filter-button" type="button" data-filter="all">All</button>
+        <button class="filter-button" type="button" data-filter="internship">Internship</button>
+        <button class="filter-button" type="button" data-filter="fdp">FDP</button>
+        <button class="filter-button" type="button" data-filter="orientation">Orientation</button>
+        <button class="filter-button" type="button" data-filter="resource">Resource Person</button>
+        <button class="filter-button" type="button" data-filter="conference">Conference</button>
+        <button class="filter-button" type="button" data-filter="workshop">Workshop</button>
+      </section>
+
+      <section class="activity-stats is-hidden" aria-label="Academic activity statistics">
+        <article class="stat-card"><strong>30</strong><span>Conference / Seminar</span></article>
+        <article class="stat-card"><strong>9</strong><span>Faculty Development</span></article>
+        <article class="stat-card"><strong>9</strong><span>Workshops</span></article>
+        <article class="stat-card"><strong>6</strong><span>Projects Guided</span></article>
+        <article class="stat-card"><strong>4</strong><span>Orientation Courses</span></article>
+        <article class="stat-card"><strong>3</strong><span>Resource Person</span></article>
+      </section>
+
+      <section class="timeline-panel is-hidden" aria-label="Activity timeline">
+        <h2>Timeline</h2>
+        <p>Academic participation and professional development activity from 2017 through 2026.</p>
+        <ul class="activity-timeline">
+          
+            <li>
+              <span>2017</span>
+              <strong>11</strong>
+            </li>
+
+            <li>
+              <span>2018</span>
+              <strong>8</strong>
+            </li>
+
+            <li>
+              <span>2019</span>
+              <strong>10</strong>
+            </li>
+
+            <li>
+              <span>2020</span>
+              <strong>10</strong>
+            </li>
+
+            <li>
+              <span>2021</span>
+              <strong>4</strong>
+            </li>
+
+            <li>
+              <span>2022</span>
+              <strong>12</strong>
+            </li>
+
+            <li>
+              <span>2023</span>
+              <strong>9</strong>
+            </li>
+
+            <li>
+              <span>2024</span>
+              <strong>8</strong>
+            </li>
+
+            <li>
+              <span>2025</span>
+              <strong>20</strong>
+            </li>
+
+            <li>
+              <span>2026</span>
+              <strong>2</strong>
+            </li>
+        </ul>
+      </section>
+
+      
+        <details class="activity-section is-hidden" id="internship" data-category="internship">
+          <summary>
+            <span>UG Internship / Project Guided</span>
+            <small>6 records</small>
+          </summary>
+          <p class="section-intro">Student internship and project guidance records drawn from the academic activity document.</p>
+          <div class="activity-grid">
+            
+            <article class="activity-card">
+              <small class="activity-badge">Internship Guided</small>
+              <h3>N. KAVIPRIYA</h3>
+              <div class="activity-meta">
+                <p><span>Project</span>AN INTERNSHIP TRAINING OF AAVIN MILK PRODUCTS</p>
+<p><span>Year</span>Completed</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Internship Guided</small>
+              <h3>S. UMAMAHESWARI</h3>
+              <div class="activity-meta">
+                <p><span>Project</span>AN INTERNSHIP TRAINING OF AAVIN MILK PRODUCTS</p>
+<p><span>Year</span>Completed</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Internship Guided</small>
+              <h3>B. GEETHA (Reg.No:20PZO1001)</h3>
+              <div class="activity-meta">
+                <p><span>Project</span>STUDIES ON PHYSIOCHEMICAL PARAMETER ANALYSIS DURING SEASONALITY WISE, DISTRIBUTION STATUS OF FRESHWATER STREAM FISHES IN SALEM DISRICT OF SOUTHERN INDIA</p>
+<p><span>Year</span>Completed</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Internship Guided</small>
+              <h3>R. KOWSALYA</h3>
+              <div class="activity-meta">
+                <p><span>Project</span>AN INTERNSHIP TRAINING AT GOVT UPGRADE PRIMARY HEALTH CENTER</p>
+<p><span>Year</span>2023-2024</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Internship Guided</small>
+              <h3>K. DHARSHINI M.Sc.</h3>
+              <div class="activity-meta">
+                <p><span>Project</span>AN INTERNSHIP TRAINING ON MICROBIAL MOLECULAR TECHNIQUES AND BIOENTREPRENEURSHIP SKILL</p>
+<p><span>Year</span>2024-2025</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Internship Guided</small>
+              <h3>T. GOKUL PRIYA.</h3>
+              <div class="activity-meta">
+                <p><span>Project</span>AN INTERNSHIP TRAINING ON MEDICAL LABORATORY TECHNIQUES</p>
+<p><span>Year</span>2025-2026</p>
+              </div>
+            </article>
+          </div>
+        </details>
+      
+        <details class="activity-section is-hidden" id="fdp" data-category="fdp">
+          <summary>
+            <span>Faculty Development Programs</span>
+            <small>9 records</small>
+          </summary>
+          <p class="section-intro">Training and professional development programs attended.</p>
+          <div class="activity-grid">
+            
+            <article class="activity-card">
+              <small class="activity-badge">Faculty Development</small>
+              <h3>One day Faculty Development Program “Technological inspirations in Teaching”</h3>
+              <div class="activity-meta">
+                <p><span>Institution</span>J.K.K. Nataraja college of Arts &amp;Science. Komarapalayum- 638183, Tamil Nadu, India.</p>
+<p><span>From</span>15th September 2018</p>
+<p><span>To</span>15th September 2018</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Faculty Development</small>
+              <h3>Two-day faculty development program” Communication skills”</h3>
+              <div class="activity-meta">
+                <p><span>Institution</span>J.K.K. Nataraja college of Arts &amp;Science. Komarapalayum- 638183, Tamil Nadu, India.</p>
+<p><span>From</span>04.07.2018</p>
+<p><span>To</span>05.07.2018</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Faculty Development</small>
+              <h3>Three days faculty development program on “Emotional Intelligence”</h3>
+              <div class="activity-meta">
+                <p><span>Institution</span>J.K.K. Nataraja college of Arts &amp;Science. Komarapalayum- 638183, Tamil Nadu, India.</p>
+<p><span>From</span>12.12.2019</p>
+<p><span>To</span>14.12.2019</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Faculty Development</small>
+              <h3>One day Faculty Development Program “Professional Development in Teaching”</h3>
+              <div class="activity-meta">
+                <p><span>Institution</span>IQAC, J.K.K. Nataraja college of Pharmacy, Komarapalayam, Namakkal- 638183, Tamil Nadu, India.</p>
+<p><span>From</span>19.04.2022</p>
+<p><span>To</span>19.04.2022</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Faculty Development</small>
+              <h3>Five days Online National Faculty Development Program on “RESEARCH METHODOLOGY AND PUBLICATION OF BOOKS&amp;ARTICLE”</h3>
+              <div class="activity-meta">
+                <p><span>Institution</span>Organized by BPT PUBLICATION AND COUNCIL FOR SCIENCE AND DEVELOPMENTS</p>
+<p><span>From</span>20.09.2023 to / 24.09.2023</p>
+<p><span>To</span>20.09.2023 to / 24.09.2023</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Faculty Development</small>
+              <h3>3 days NAAN MUDHALVAN FDP-PHASE II (MEDICAL CODING-TNASDC HEALTH 6th Sem iii year</h3>
+              <div class="activity-meta">
+                <p><span>Institution</span>Organized by TAMILNADU APEX SKILL DEVELOPMENT CENTER FOR HEATH CARE at Periyar University</p>
+<p><span>From</span>19.02.2024 to 21.02.2024</p>
+<p><span>To</span>19.02.2024 to 21.02.2024</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Faculty Development</small>
+              <h3>Six days NAAN MUDHALVAN FDP-PHASE II (ADVANCED MEDICAL CODING 6th Sem iii year</h3>
+              <div class="activity-meta">
+                <p><span>Institution</span>Organized by Periyar University</p>
+<p><span>From</span>06.01.2025 to / 11.01.2025</p>
+<p><span>To</span>06.01.2025 to / 11.01.2025</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Faculty Development</small>
+              <h3>5 days NATIONAL LEVEL ONLINE- FDP</h3>
+              <div class="activity-meta">
+                <p><span>Institution</span>KONGUNADU ARTS AND SCIENCE COLLEGE (AUTONOMOUS) / GN Mills, Coimbatore, Tami Nadu</p>
+<p><span>From</span>20.01.2025 to / 24.01.2025</p>
+<p><span>To</span>20.01.2025 to / 24.01.2025</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Faculty Development</small>
+              <h3>5 days NATIONAL LEVEL ONLINE- FDP</h3>
+              <div class="activity-meta">
+                <p><span>Institution</span>Dr.N.G.P. ARTS AND SCIENCE, Coimbatore, Tami lNadu-641048</p>
+<p><span>From</span>17.02.2025 to 21.02.2025</p>
+<p><span>To</span>17.02.2025 to 21.02.2025</p>
+              </div>
+            </article>
+          </div>
+        </details>
+      
+        <details class="activity-section is-hidden" id="orientation" data-category="orientation">
+          <summary>
+            <span>UGC Orientation / Refresher Courses</span>
+            <small>4 records</small>
+          </summary>
+          <p class="section-intro">UGC-sponsored orientation and refresher course records with grades and duration.</p>
+          <div class="activity-grid">
+            
+            <article class="activity-card">
+              <small class="activity-badge">Orientation / Refresher</small>
+              <h3>125th UGC SPONSERD Orientation program</h3>
+              <div class="activity-meta">
+                <p><span>University / College</span>Bharathiyar University, / Coimbatore, Tamil Nadu, India</p>
+<p><span>Duration</span>22.01.2020 to 11.02.2020 / (21 days) Grade: A+</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Orientation / Refresher</small>
+              <h3>UGC SPONSERD Refresher course in Life Sciences</h3>
+              <div class="activity-meta">
+                <p><span>University / College</span>Ranchi University, / Ranchi, Jharkhand, India.</p>
+<p><span>Duration</span>03.09.2021 to 16.09.2021 / (14 days) Grade: A</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Orientation / Refresher</small>
+              <h3>UGC SPONSERD Refresher course in Life Sciences (CORE)</h3>
+              <div class="activity-meta">
+                <p><span>University / College</span>Devi Ahilya Vishwavidyalaya, University, / Indore, M.P, India.</p>
+<p><span>Duration</span>14.03.2023 to 27.03.2023 / (14 days) Grade: A+</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Orientation / Refresher</small>
+              <h3>UGC SPONSERD Refresher Course in Life Sciences (ID)</h3>
+              <div class="activity-meta">
+                <p><span>University / College</span>UGC -Malaviya Mission Teacher Training Centre, Bharathiar University, Coimbatore, Tamil Nadu, India.</p>
+<p><span>Duration</span>18.09.2024 to 01.10.2024 / (14 Days) Grade: A+</p>
+              </div>
+            </article>
+          </div>
+        </details>
+      
+        <details class="activity-section is-hidden" id="resource" data-category="resource">
+          <summary>
+            <span>Lecture Delivered / Resource Person</span>
+            <small>3 records</small>
+          </summary>
+          <p class="section-intro">Invited lecture, evaluator and resource-person contributions.</p>
+          <div class="activity-grid">
+            
+            <article class="activity-card">
+              <small class="activity-badge">Resource Person</small>
+              <h3>International Level / Conference</h3>
+              <div class="activity-meta">
+                <p><span>Venue</span>Sri Venkateshwara arts and science, Dhamapuri-09</p>
+<p><span>Position</span>Acted as a Resource Person</p>
+<p><span>Topic</span>The Future Innovation Idea of Human Genomic Astro</p>
+<p><span>Date</span>28.02.2020</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Resource Person</small>
+              <h3>30th National Children Science Congress 2022-2023</h3>
+              <div class="activity-meta">
+                <p><span>Venue</span>Acthudha Matriculation School, Dindigul</p>
+<p><span>Position</span>Acted as a Resource and evaluator</p>
+<p><span>Topic</span>Environmental sciences and its ethical values</p>
+<p><span>Date</span>27.10.2022</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Resource Person</small>
+              <h3>Inauguration of Eco club, Lakshmi college of Education, Dindigul</h3>
+              <div class="activity-meta">
+                <p><span>Venue</span>Inauguration of Eco club, Lakshmi college of Education, Dindigul</p>
+<p><span>Position</span>Acted as a Resource Person Innovation on Education</p>
+<p><span>Topic</span>“Education in future”</p>
+<p><span>Date</span>10.10.2023</p>
+              </div>
+            </article>
+          </div>
+        </details>
+      
+        <details class="activity-section is-hidden" id="conference" data-category="conference">
+          <summary>
+            <span>Research Paper Presentation / Seminars / Conferences</span>
+            <small>30 records</small>
+          </summary>
+          <p class="section-intro">International, national and state-level conference, seminar and paper presentation records.</p>
+          <div class="activity-grid">
+            
+            <article class="activity-card">
+              <small class="activity-badge">Conference / Seminar</small>
+              <h3>Name of the Conference / Seminar / workshop, etc.</h3>
+              <div class="activity-meta">
+                <p><span>Venue</span>Venue</p>
+<p><span>Paper / Topic</span>Title of the paper presentation</p>
+<p><span>Date</span>Date</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Conference / Seminar</small>
+              <h3>UGC sponsor two-day National level Seminar On “(CEADI-2017)”</h3>
+              <div class="activity-meta">
+                <p><span>Venue</span>GTN Arts College Dindigul</p>
+<p><span>Paper / Topic</span>“Study on the Environment impact of heavy metals in Catla catla and its effects on the health status of the people in Kuttiyapatty pond village in Dindigul District”</p>
+<p><span>Date</span>13th &amp;14th / July 2017</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Conference / Seminar</small>
+              <h3>Two days international seminar Current Trends in life Science Medicinal plants and Therapeutics</h3>
+              <div class="activity-meta">
+                <p><span>Venue</span>Kandasami Kandar’s College Velur, Namakkal, Tamil Nadu</p>
+<p><span>Paper / Topic</span>“The Effect of Rhizobacterial Inoculation on Alkaloid Aloin Content of Aloe vera”</p>
+<p><span>Date</span>7th and 8th / August 2018</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Conference / Seminar</small>
+              <h3>UGC- sponsored one day National Seminar</h3>
+              <div class="activity-meta">
+                <p><span>Venue</span>Department of Zoology, APA College of Arts and Culture, Palani, Dindigul (Dt), Tamil Nadu.</p>
+<p><span>Paper / Topic</span>“Recent Trends in Biotechnology, Bioinformatics, Biodiversity and its conservation and environmental impact on global warming”</p>
+<p><span>Date</span>12th / January 2017</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Conference / Seminar</small>
+              <h3>UGC Sponsored One day National level</h3>
+              <div class="activity-meta">
+                <p><span>Venue</span>Arulmigu Palaniandavar college of Arts and Culture, Palani, Dindigul (D.t).</p>
+<p><span>Paper / Topic</span>“Wild Life Conservation Status in Palani Hills of South India”</p>
+<p><span>Date</span>1st / October 2015</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Conference / Seminar</small>
+              <h3>International Conference</h3>
+              <div class="activity-meta">
+                <p><span>Venue</span>Centre of Advanced Study in Marine Biology, faculty of Marine Science, Parangipetai-608 502, Tamil Nadu, and India.</p>
+<p><span>Paper / Topic</span>“Biotechnology and its Application in Agriculture and Fisheries”</p>
+<p><span>Date</span>23rd -25th / August 2017</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Conference / Seminar</small>
+              <h3>One day International Seminar on Biological Science</h3>
+              <div class="activity-meta">
+                <p><span>Venue</span>Arulmigu Palaniandavar Arts and Culture for Women, Palani on 4th February 2016.</p>
+<p><span>Paper / Topic</span>“Studies on diversity, distributional pattern and conservation status of fresh water fishes in Palani hills”</p>
+<p><span>Date</span>Presentation / 4th February 2016.</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Conference / Seminar</small>
+              <h3>International conference on “Current Science of Physiology and Behavior” (CSPB-2019)</h3>
+              <div class="activity-meta">
+                <p><span>Venue</span>Department of Zoology Periyar University, Salem-636011.</p>
+<p><span>Paper / Topic</span>“Studies on socio behavior and conservation status of fresh water fishes and other animals in Palani hills of southern India”</p>
+<p><span>Date</span>Presentation / 22 and 23 february,2019</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Conference / Seminar</small>
+              <h3>International Conference on Innovative Research Science, Engineering Technology and Management (ICIRSETM-2020)</h3>
+              <div class="activity-meta">
+                <p><span>Venue</span>Sri Venkateswara arts and science college, dharumapuri-636809</p>
+<p><span>Paper / Topic</span>“The future Innovation idea of Human genome study in genomic Astro”</p>
+<p><span>Date</span>Presentation / 28thFebruary, / 2020</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Conference / Seminar</small>
+              <h3>National level Seminar on “Recent Trends in Biotechnology”</h3>
+              <div class="activity-meta">
+                <p><span>Venue</span>Department of Zoology, Arulmigu Palaniandaver College of Arts &amp; Science, Palani.</p>
+<p><span>Paper / Topic</span>“Recent Trends in Biotechnology”</p>
+<p><span>Date</span>12th January / 2017</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Conference / Seminar</small>
+              <h3>State level Seminar on “Recent Trends in Biotechnology and Bio information”</h3>
+              <div class="activity-meta">
+                <p><span>Venue</span>Department of Zoology, Arulmigu Palani Andaver College of Arts &amp; Science, Palani.</p>
+<p><span>Paper / Topic</span>Recent Trends in Biotechnology and Bio information”</p>
+<p><span>Date</span>30th March / 2012.</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Conference / Seminar</small>
+              <h3>State level Seminar on “Recent Advances in Pharmaceutical Science”</h3>
+              <div class="activity-meta">
+                <p><span>Venue</span>Erode College of Pharmacy and Dr. M.G.R medical University Chennai -32</p>
+<p><span>Paper / Topic</span>Recent Advances in Pharmaceutical Science”</p>
+<p><span>Date</span>22nd July / 2016</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Conference / Seminar</small>
+              <h3>State level seminar on “Modern Approaches in Pharmaceuticals Formulations”</h3>
+              <div class="activity-meta">
+                <p><span>Venue</span>Erode College of Pharmacy, Erode and MGR Medical University Chennai-32</p>
+<p><span>Paper / Topic</span>Modern Approaches in Pharmaceuticals Formulations”</p>
+<p><span>Date</span>24th Feb. / 2017.</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Conference / Seminar</small>
+              <h3>National Seminar On “Research Methodology and Application of Statistics in Education”</h3>
+              <div class="activity-meta">
+                <p><span>Venue</span>Center for Educational Research, Madurai Kamaraj University, Maduari-625 021.</p>
+<p><span>Paper / Topic</span>Research Methodology and Application of Statistics in Education”</p>
+<p><span>Date</span>14th &amp; 15th September / 2017</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Conference / Seminar</small>
+              <h3>International Seminar on “The Impact of Environmental Pollution on Disease and Drug Resistance”</h3>
+              <div class="activity-meta">
+                <p><span>Venue</span>Kandasami Kandars’s College Velur, Namakkal.</p>
+<p><span>Paper / Topic</span>The Impact of Environmental Pollution on Disease and Drug Resistance”</p>
+<p><span>Date</span>13th October 2017.</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Conference / Seminar</small>
+              <h3>National Seminar on “Recent Trends in Biological of Botany Biotechnology &amp; Zoology”</h3>
+              <div class="activity-meta">
+                <p><span>Venue</span>Padmavani Arts &amp; science College for women, Salem.</p>
+<p><span>Paper / Topic</span>Recent Trends in Biological of Botany Biotechnology &amp; Zoology”</p>
+<p><span>Date</span>20th January. / 2018</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Conference / Seminar</small>
+              <h3>One day International Symposium on “Organized by PG and Research Department of zoology”</h3>
+              <div class="activity-meta">
+                <p><span>Venue</span>J.K.K. Nataraja College of Arts and Science, Kumarapalayum, Erode (D.t)</p>
+<p><span>Paper / Topic</span>Organized by PG and Research Department of zoology”</p>
+<p><span>Date</span>17th December 2018</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Conference / Seminar</small>
+              <h3>National conference on “Novel Microbial Technologies for Sustainable Agriculture and Allied Industries / (NMTSAAI-2019)”</h3>
+              <div class="activity-meta">
+                <p><span>Venue</span>Department of Agriculture Microbiology, Annamalai University, Annamalai Nagar, Tamil Nadu</p>
+<p><span>Paper / Topic</span>“Novel Microbial Technologies for sustainable Agriculture and Allied Industries / (NMTSAAI-2019)”</p>
+<p><span>Date</span>28th and 29th January 2019</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Conference / Seminar</small>
+              <h3>UGC Sponsored State level Seminar on “Gene and Environmental Interaction”</h3>
+              <div class="activity-meta">
+                <p><span>Venue</span>PG and Research Department of botany, velar college for women Erode.</p>
+<p><span>Paper / Topic</span>Gene and Environmental Interaction</p>
+<p><span>Date</span>4th March 2019</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Conference / Seminar</small>
+              <h3>NAAC sponsored a two days national level seminar on “Role of NAAC in enhance quality in higher educational institutions”</h3>
+              <div class="activity-meta">
+                <p><span>Venue</span>Sri Vidya Mandir Arts&amp; Science college (IQAC)</p>
+<p><span>Paper / Topic</span>Role of NAAC in enhance quality in higher educational institutions”</p>
+<p><span>Date</span>7th and 8th September 2021</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Conference / Seminar</small>
+              <h3>Global Web conference on multidisciplinary research and development (GWCMRD-2020)</h3>
+              <div class="activity-meta">
+                <p><span>Venue</span>Sarojini Research and Development Council</p>
+<p><span>Paper / Topic</span>Sarojini Research and Development Council</p>
+<p><span>Date</span>October / 31,2020</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Conference / Seminar</small>
+              <h3>Indo American / multidisciplinary web conference / (IAMWCASET-2022</h3>
+              <div class="activity-meta">
+                <p><span>Venue</span>Arts, Science, / Engineering and Technology</p>
+<p><span>Paper / Topic</span>Sidhartha Educational and Research Federation 31</p>
+<p><span>Date</span>AUG-2022</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Conference / Seminar</small>
+              <h3>One day national seminar on “Recent Trends in Environmental Microbial-Biotechnology” (RTEMB-2022)</h3>
+              <div class="activity-meta">
+                <p><span>Venue</span>Departments of biotechnology &amp; microbiology / Padmavani Arts&amp; Science college for women, opp, Periyar University, Salem-636011, Tamil Nadu</p>
+<p><span>Paper / Topic</span>Seasonal changes in physiochemical parameters of fresh water in some selected location of palani hills, Tamilnadu, India</p>
+<p><span>Date</span>Presentation / 18th March 2022</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Conference / Seminar</small>
+              <h3>One day international conference on / “Recent Trends in Science, Technology, / Management &amp; Humanities”</h3>
+              <div class="activity-meta">
+                <p><span>Venue</span>Jagannath University, Bahadurgarh, Haryana / (India)</p>
+<p><span>Paper / Topic</span>“Physiochemical parameters analysis and diversity status of endemic stream fishes in palani hills western Ghats of south India”</p>
+<p><span>Date</span>Presentation / 29th March 2022</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Conference / Seminar</small>
+              <h3>Periyar University, Salem-636011 / National Seminar on 75 Years of Advancements in Zoological Research</h3>
+              <div class="activity-meta">
+                <p><span>Venue</span>Periyar university, salem-636011, Tamil Nadu, India.</p>
+<p><span>Paper / Topic</span>National Seminar on 75 Years of Advancements in Zoological Research</p>
+<p><span>Date</span>Participated / 13.09.2022</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Conference / Seminar</small>
+              <h3>International / Conference</h3>
+              <div class="activity-meta">
+                <p><span>Venue</span>Nagarjuna government college, Telangana, India</p>
+<p><span>Paper / Topic</span>The diversity, seasonality and distributional pattern of fresh water fishes in Palani hills, Tamil Nadu.</p>
+<p><span>Date</span>Participated &amp; / Presented a paper / 29.08.2022 / To / 30.08.2022</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Conference / Seminar</small>
+              <h3>International Conference on nanotechnology in science innovation</h3>
+              <div class="activity-meta">
+                <p><span>Venue</span>Nadar Saraswathi college of arts and science (Autonomous), vadaputhupatti, theni-625531</p>
+<p><span>Paper / Topic</span>Effect of heavy metals from dyeing mills effluent 0n the freshwater fish Labeo rohita and toxic effect on fish metabolism</p>
+<p><span>Date</span>Participated &amp; / Presented a research paper held on 09.01.2025 to 10.01.2025</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Conference / Seminar</small>
+              <h3>National Conference on Bioprospecting of Natural Resources for the Betterment of Society (BNRBS-2025)</h3>
+              <div class="activity-meta">
+                <p><span>Venue</span>Bharathidasan college oof arts and science, Ellispettai, Pallipalayam po erode -638116, Tamil Nadu, India</p>
+<p><span>Paper / Topic</span>studies on molecular characterization of fresh water fishes, conservation status in Majalaru river of Pachalur Hills</p>
+<p><span>Date</span>Participated and Oral Presentation / on 08.08.2025</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Conference / Seminar</small>
+              <h3>International / Conference</h3>
+              <div class="activity-meta">
+                <p><span>Venue</span>conducted by INTERNATIONAL TAMIL DIGNITARIES’ FEDERATION (169/2020)</p>
+<p><span>Paper / Topic</span>Certificate of appreciation-2025</p>
+<p><span>Date</span>Participated on / 05.09.2025</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Conference / Seminar</small>
+              <h3>One day Seminar</h3>
+              <div class="activity-meta">
+                <p><span>Venue</span>Organized by Research and Development cell by SRI VASAVI COLLEGE ERODE association with Pencilbitz</p>
+<p><span>Paper / Topic</span>UDYAM-TN-27-0069110</p>
+<p><span>Date</span>Participated / On 03.01.2026</p>
+              </div>
+            </article>
+          </div>
+        </details>
+      
+        <details class="activity-section is-hidden" id="workshop" data-category="workshop">
+          <summary>
+            <span>International, National and State-Level Workshops</span>
+            <small>9 records</small>
+          </summary>
+          <p class="section-intro">Workshop participation and professional training activities.</p>
+          <div class="activity-grid">
+            
+            <article class="activity-card">
+              <small class="activity-badge">Workshop</small>
+              <h3>International Workshop on “Trends in Plant Diversity and Applied microbiology conservation and application”</h3>
+              <div class="activity-meta">
+                <p><span>Venue</span>PG and Research Department of botany, velar college for women Erode.</p>
+<p><span>Date</span>3-4 July 2017.</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Workshop</small>
+              <h3>Workshop on “Designing and creating website using free tools”</h3>
+              <div class="activity-meta">
+                <p><span>Venue</span>IQAC and central library / GTN Arts college Dindigul,</p>
+<p><span>Date</span>2nd September 2017.</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Workshop</small>
+              <h3>International workshop on “Biosensor and Bioelectronics”</h3>
+              <div class="activity-meta">
+                <p><span>Venue</span>V.P.P.M. Arts and Science college for women, / Krishnan kovil.</p>
+<p><span>Date</span>October 5th / 2017</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Workshop</small>
+              <h3>UGC Autonomy grant Sponsored state level workshop on “Hands on Training in PCR Technique”</h3>
+              <div class="activity-meta">
+                <p><span>Venue</span>Department of zoology, GTN Arts college, Dindigul (D.t)</p>
+<p><span>Date</span>5th March / 2019</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Workshop</small>
+              <h3>Workshop on “The Use of Fold Scopes”</h3>
+              <div class="activity-meta">
+                <p><span>Venue</span>Department of Biochemistry. Vivekananda college of Arts and Science for Women. / Thiruchenkodu.</p>
+<p><span>Date</span>28th July / 2018</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Workshop</small>
+              <h3>Workshop on “Pedagogic and Personal Effectiveness”</h3>
+              <div class="activity-meta">
+                <p><span>Venue</span>J.K.K. Nataraja Dental College and Hospital kumarapalayum, / Erode (D.t)</p>
+<p><span>Date</span>22 and 23rd / October-2019</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Workshop</small>
+              <h3>Workshop on “Solution for River Pollution”</h3>
+              <div class="activity-meta">
+                <p><span>Venue</span>Society for environment and sustainable development (SESD), New Delhi, India</p>
+<p><span>Date</span>28th August / 2021</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Workshop</small>
+              <h3>Reference management tools and online citation database</h3>
+              <div class="activity-meta">
+                <p><span>Venue</span>Indian Academic Researchers Association</p>
+<p><span>Date</span>21.04.2020</p>
+              </div>
+            </article>
+
+            <article class="activity-card">
+              <small class="activity-badge">Workshop</small>
+              <h3>Spectroscopy Techniques</h3>
+              <div class="activity-meta">
+                <p><span>Venue</span>Immaculate College for Women, Kallakurichi.</p>
+<p><span>Date</span>30.04.2020</p>
+              </div>
+            </article>
+          </div>
+        </details>
+    </main>
+    <a class="action-link back-to-top" href="#top" aria-label="Back to top">↑</a>
+    <script>
+      const filterButtons = document.querySelectorAll(".filter-button");
+      const sections = document.querySelectorAll(".activity-section");
+      const backToTop = document.querySelector(".back-to-top");
+
+      sections.forEach((section) => {
+        section.classList.add("is-hidden");
+        section.open = false;
+      });
+
+      filterButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const filter = button.dataset.filter;
+
+          filterButtons.forEach((item) => item.classList.remove("active"));
+          button.classList.add("active");
+
+          sections.forEach((section) => {
+            const shouldShow = filter === "all" || section.dataset.category === filter;
+            section.classList.toggle("is-hidden", !shouldShow);
+            section.open = shouldShow;
+          });
+        });
+      });
+
+      window.addEventListener("scroll", () => {
+        backToTop.classList.toggle("is-visible", window.scrollY > 500);
+      });
+    </script>
+  </body>
+</html>
+
+
+
+
